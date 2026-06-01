@@ -1,7 +1,6 @@
 import '../styles/tailwind.css';
 import '../styles/theme.css';
 import '../styles/fonts.css';
-import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
 import { Metadata } from 'next';
 import clsx from 'clsx';
 
@@ -18,9 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={clsx("bg-white text-black min-h-screen antialiased overflow-x-hidden")}>
-        <SmoothScrollProvider>
-          {children}
-        </SmoothScrollProvider>
+        {children}
       </body>
     </html>
   );

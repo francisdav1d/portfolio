@@ -1,7 +1,6 @@
 'use client';
 
 import { useState } from 'react';
-import { ImageWithFallback } from './figma/ImageWithFallback';
 
 interface Project {
   title: string;
@@ -30,7 +29,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
         ></iframe>
       ) : (
         <>
-          <ImageWithFallback
+          <img
             src={project.image}
             alt={project.title}
             className="w-full h-full object-cover"
