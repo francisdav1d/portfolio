@@ -7,8 +7,8 @@ export function Nav() {
   const pathname = usePathname();
 
   return (
-    <nav className="w-full flex justify-center items-center py-17 px-4 bg-white">
-      <div className="flex gap-18 text-sm font-bold tracking-widest uppercase text-gray-400">
+    <nav className="w-full flex justify-center items-center py-8 md:py-17 px-4 bg-white">
+      <div className="flex flex-col md:flex-row gap-6 md:gap-18 text-xs md:text-sm font-bold tracking-widest uppercase text-gray-400 items-center">
         <Link
           href="/"
           className={`transition-colors duration-300 ${pathname === '/' ? 'text-black' : 'hover:text-black'}`}

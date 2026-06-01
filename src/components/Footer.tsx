@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="py-12 px-6 bg-white w-full">
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col items-center gap-10">
-          <div className="flex gap-8 items-center text-gray-400">
+          <div className="flex flex-wrap justify-center gap-6 md:gap-8 items-center text-gray-400">
             <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-black transition-colors">
               <svg viewBox="0 0 24 24" className="w-7 h-7 fill-current"><path d="M18.901 1.153h3.68l-8.04 9.19L24 22.846h-7.406l-5.8-7.584-6.638 7.584H.474l8.6-9.83L0 1.154h7.594l5.243 6.932ZM17.61 20.644h2.039L6.486 3.24H4.298Z" /></svg>
             </a>

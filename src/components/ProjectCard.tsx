@@ -37,9 +37,9 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
 
           <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-0 group-hover:opacity-80 transition-opacity duration-300"></div>
           
-          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
-            <h3 className="text-4xl font-medium mb-1">{project.title} ✦</h3>
-            <p className="text-2xl opacity-90">{project.subtitle}</p>
+          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-4 md:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
+            <h3 className="text-2xl md:text-4xl font-medium mb-1">{project.title} ✦</h3>
+            <p className="text-lg md:text-2xl opacity-90">{project.subtitle}</p>
           </div>
         </>
       )}

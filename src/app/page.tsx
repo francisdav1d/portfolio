@@ -59,6 +59,7 @@ export default function Home() {
           loop
           muted
           playsInline
+          preload="auto"
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'url(#directional-blur)' }}
         />
@@ -72,9 +73,9 @@ export default function Home() {
         <Nav />
 
         {/* Projects Grid */}
-        <section id="work" className="pb-24 w-full">
-          <div className="w-[79%] max-w-[2000px] mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+        <section id="work" className="pb-12 md:pb-24 w-full">
+          <div className="w-[90%] md:w-[79%] max-w-[2000px] mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0">
               {projects.map((project, index) => (
                 <ProjectCard key={index} project={project} index={index} />
               ))}
