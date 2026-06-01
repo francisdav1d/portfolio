@@ -1,6 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef } from 'react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
   title: string;
@@ -11,10 +16,26 @@ interface Project {
 
 export function ProjectCard({ project, index = 0 }: { project: Project, index?: number }) {
   const [isPlaying, setIsPlaying] = useState(false);
+  const cardRef = useRef<HTMLDivElement>(null);
   const videoId = project.youtubeId || "dQw4w9WgXcQ";
+
+  useGSAP(() => {
+    gsap.from(cardRef.current, {
+      y: 100,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: cardRef.current,
+        start: "top bottom-=100",
+        toggleActions: "play none none reverse"
+      }
+    });
+  }, { scope: cardRef });
 
   return (
     <div 
+      ref={cardRef}
       className="relative aspect-[16/10] overflow-hidden group cursor-pointer bg-gray-100"
       onClick={() => setIsPlaying(true)}
     >

@@ -3,6 +3,8 @@
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { ProjectCard } from '@/components/ProjectCard';
+import { Sprite } from '@/components/Sprite';
+import { HeroText } from '@/components/HeroText';
 
 export default function Home() {
   const projects = [
@@ -54,7 +56,7 @@ export default function Home() {
           </filter>
         </svg>
         <video
-          src="/video/Portfolio_1_handbrake.mp4"
+          src="/video/Portfolio_compressed.mp4"
           autoPlay
           loop
           muted
@@ -63,13 +65,16 @@ export default function Home() {
           className="w-full h-full object-cover object-center scale-105"
           style={{ filter: 'url(#directional-blur)' }}
         />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/25 via-transparent to-black/40 pointer-events-none" />
+        <HeroText />
+        <Sprite />
       </div>
 
       {/* Spacer to show video */}
       <div className="w-full" style={{ height: '55vh' }}></div>
 
       {/* Content that scrolls over the fixed video */}
-      <div className="bg-white relative z-10 w-full">
+      <div id="content-section" className="bg-white relative z-10 w-full">
         <Nav />
 
         {/* Projects Grid */}
@@ -85,6 +90,8 @@ export default function Home() {
 
         <Footer />
       </div>
+
+      <Sprite variant="scroll" />
     </div>
   );
 }
