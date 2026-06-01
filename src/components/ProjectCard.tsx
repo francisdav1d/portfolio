@@ -20,17 +20,20 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
   const videoId = project.youtubeId || "dQw4w9WgXcQ";
 
   useGSAP(() => {
-    gsap.from(cardRef.current, {
-      y: 100,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: "top bottom-=100",
-        toggleActions: "play none none reverse"
+    gsap.fromTo(cardRef.current, 
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.8,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top bottom-=50",
+          toggleActions: "play reverse play reverse"
+        }
       }
-    });
+    );
   }, { scope: cardRef });
 
   return (
@@ -58,9 +61,9 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
 
           <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-0 group-hover:opacity-80 transition-opacity duration-300"></div>
           
-          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-4 md:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
-            <h3 className="text-2xl md:text-4xl font-medium mb-1">{project.title} ✦</h3>
-            <p className="text-lg md:text-2xl opacity-90">{project.subtitle}</p>
+          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-4 md:p-6 lg:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
+            <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-1">{project.title} ✦</h3>
+            <p className="text-base md:text-lg lg:text-xl xl:text-2xl opacity-90">{project.subtitle}</p>
           </div>
         </>
       )}

@@ -15,13 +15,19 @@ export function HeroText() {
 
     const ctx = gsap.context(() => {
       // 1. Entrance animation on load
-      gsap.from(titleRef.current, {
-        y: 60,
-        opacity: 0,
-        duration: 1.2,
-        ease: 'power4.out',
-        delay: 0.6,
-      });
+      gsap.fromTo(titleRef.current, 
+        {
+          y: 60,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1.2,
+          ease: 'power4.out',
+          delay: 0.6,
+        }
+      );
 
       // 2. Scroll Trigger for smooth fade out & parallax on scroll down, with reverse on scroll up
       gsap.to(containerRef.current, {
@@ -49,9 +55,10 @@ export function HeroText() {
       {/* Modern Bold Lowercase Title */}
       <h1 
         ref={titleRef}
-        className="font-syne text-5xl sm:text-7xl md:text-9xl font-extrabold text-white tracking-tighter lowercase leading-none max-w-4xl"
+        className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-extrabold text-white tracking-tighter lowercase leading-none max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl"
         style={{
           textShadow: '0 4px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25)',
+          opacity: 0,
         }}
       >
         hey, i am francis

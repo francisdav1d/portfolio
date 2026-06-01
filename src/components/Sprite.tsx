@@ -17,16 +17,25 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
     const ctx = gsap.context(() => {
       if (variant === 'hero') {
         // Hero sprite intro: fly in on page load (animated on introRef to avoid conflicts)
-        gsap.from(introRef.current, {
-          y: 300,
-          x: 100,
-          opacity: 0,
-          rotation: -45,
-          scale: 0.5,
-          duration: 1.5,
-          ease: "elastic.out(1, 0.5)",
-          delay: 0.5,
-        });
+        gsap.fromTo(introRef.current,
+          {
+            y: 300,
+            x: 100,
+            opacity: 0,
+            rotation: -45,
+            scale: 0.5,
+          },
+          {
+            y: 0,
+            x: 0,
+            opacity: 1,
+            rotation: 0,
+            scale: 1,
+            duration: 1.5,
+            ease: "elastic.out(1, 0.5)",
+            delay: 0.5,
+          }
+        );
 
         // Hero sprite scroll: fade/fly out as user scrolls down, and reverse (fade/fly in) as they scroll up
         gsap.to(containerRef.current, {
@@ -105,9 +114,11 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
           }
         });
 
-        // Gentle float on the image
+        // Natural breathing and floating effect
         gsap.to(spriteRef.current, {
-          y: "-=25",
+          y: "-=15",
+          scale: 1.05,
+          rotation: 3,
           duration: 2.5,
           ease: "sine.inOut",
           yoyo: true,
@@ -124,12 +135,15 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
     : "fixed bottom-0 left-1 md:left-5 z-50";
 
   const sizeClass = variant === 'hero'
-    ? "w-64 md:w-120"
-    : "w-32 md:w-60";
+    ? "w-[45vw] sm:w-[35vw] md:w-[25vw] max-w-[500px]"
+    : "w-[20vw] sm:w-[15vw] md:w-[10vw] max-w-[150px]";
+
+  const initialStyle = variant === 'scroll' ? { opacity: 0 } : undefined;
+  const introStyle = variant === 'hero' ? { opacity: 0 } : undefined;
 
   return (
-    <div ref={containerRef} className={`${positionClass} pointer-events-none`}>
-      <div ref={introRef} className="origin-bottom">
+    <div ref={containerRef} className={`${positionClass} pointer-events-none`} style={initialStyle}>
+      <div ref={introRef} className="origin-bottom" style={introStyle}>
         <img
           ref={spriteRef}
           src="/images/francis_sprite_background_removed.png"

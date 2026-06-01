@@ -1,5 +1,7 @@
 'use client';
 
+import { useRef, useEffect } from 'react';
+import gsap from 'gsap';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
 import { ProjectCard } from '@/components/ProjectCard';
@@ -7,6 +9,16 @@ import { Sprite } from '@/components/Sprite';
 import { HeroText } from '@/components/HeroText';
 
 export default function Home() {
+  const videoContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!videoContainerRef.current) return;
+    gsap.fromTo(videoContainerRef.current,
+      { opacity: 0 },
+      { opacity: 1, duration: 1.0, ease: "power2.out", delay: 0.1 }
+    );
+  }, []);
+
   const projects = [
     {
       title: "SPCTR",
@@ -49,7 +61,11 @@ export default function Home() {
   return (
     <div className="min-h-screen text-black">
       {/* Fixed Full Width Rectangular Video Header */}
-      <div className="fixed top-0 left-0 w-full z-0" style={{ height: '55vh' }}>
+      <div 
+        ref={videoContainerRef}
+        className="fixed top-0 left-0 w-full z-0" 
+        style={{ height: 'clamp(280px, 50vh, 55vh)', opacity: 0 }}
+      >
         <svg className="absolute w-0 h-0">
           <filter id="directional-blur">
             <feGaussianBlur stdDeviation="0 6" />
@@ -71,15 +87,15 @@ export default function Home() {
       </div>
 
       {/* Spacer to show video */}
-      <div className="w-full" style={{ height: '55vh' }}></div>
+      <div className="w-full" style={{ height: 'clamp(280px, 50vh, 55vh)' }}></div>
 
       {/* Content that scrolls over the fixed video */}
       <div id="content-section" className="bg-white relative z-10 w-full">
         <Nav />
 
         {/* Projects Grid */}
-        <section id="work" className="pb-12 md:pb-24 w-full">
-          <div className="w-[90%] md:w-[79%] max-w-[2000px] mx-auto">
+        <section id="work" className="pb-8 md:pb-12 lg:pb-16 xl:pb-24 w-full">
+          <div className="w-[92%] md:w-[85%] lg:w-[82%] xl:w-[79%] max-w-[2000px] mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-0">
               {projects.map((project, index) => (
                 <ProjectCard key={index} project={project} index={index} />
