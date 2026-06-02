@@ -26,21 +26,24 @@ export function About() {
           scrollTrigger: {
             trigger: containerRef.current,
             start: "top 95%",
+            toggleActions: "play none none reverse"
           }
         }
       );
 
-      gsap.fromTo(imageRef.current,
-        { scale: 0.9, opacity: 0, y: 50 },
+      gsap.fromTo(".real-photo",
+        { scale: 0.5, opacity: 0, rotation: -10 },
         {
           scale: 1,
           opacity: 1,
-          y: 0,
+          rotation: 0,
           duration: 0.8,
-          ease: "power2.out",
+          delay: 0.35, // Pop in EXACTLY as the fixed sprite shrinks to 0
+          ease: "back.out(1.5)",
           scrollTrigger: {
             trigger: containerRef.current,
-            start: "top 95%",
+            start: "top 50%", // Matches the fixed sprite trigger precisely
+            toggleActions: "play none none reverse"
           }
         }
       );
@@ -62,10 +65,11 @@ export function About() {
               Crafting stories <br /> through motion.
             </h3>
             <p className="text-neutral-600 text-base md:text-lg lg:text-xl font-light leading-relaxed mb-6">
-              I am a professional video editor and creative director specializing in cinematic storytelling. With a keen eye for pacing, color, and audio design, I transform raw footage into immersive experiences.
+              Hey, I'm Francis. I have been editing for 4 years. I started learning editing for my own YouTube channel. I loved the process so I continued.
             </p>
             <p className="text-neutral-600 text-base md:text-lg lg:text-xl font-light leading-relaxed mb-10">
-              Whether it is a high-energy commercial, a documentary, or a music video, my goal is always the same: to create visuals that don't just capture attention, but hold it.
+              I specialize in editing for YouTubers. Clean edits and no missed deadlines.<br />
+              If that sounds like what you are looking for, let's work together!
             </p>
             
             <div>
@@ -75,16 +79,19 @@ export function About() {
             </div>
           </div>
 
-          <div ref={imageRef} className="w-full lg:w-1/2 relative flex justify-center items-center mt-12 lg:mt-0">
+          <div className="w-full lg:w-1/2 relative flex justify-center items-center mt-12 lg:mt-0">
             <div className="absolute inset-0 bg-[#f5f5f5] rounded-3xl transform rotate-3 scale-95 -z-10"></div>
             
-            <div className="relative w-full aspect-[4/5] max-w-md mx-auto overflow-hidden bg-neutral-100 shadow-2xl">
+            <div className="relative w-full aspect-[4/5] max-w-md mx-auto overflow-hidden bg-neutral-100 shadow-2xl flex items-center justify-center">
+              
+              {/* The Real Photograph (Pops in instantly) */}
               <img 
-                src="/images/francis_sprite_background_removed.png" 
-                alt="Francis David" 
-                className="w-full h-full object-cover object-center filter grayscale contrast-125"
+                src="/images/working.png" 
+                alt="Francis David Working" 
+                className="real-photo absolute inset-0 w-full h-full object-cover object-center opacity-0 z-10 grayscale contrast-125"
               />
-              <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-20"></div>
+              
+              <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-10 pointer-events-none z-30"></div>
             </div>
           </div>
 

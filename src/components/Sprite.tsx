@@ -6,7 +6,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
+export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'about' }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const spriteGroupRef = useRef<HTMLDivElement>(null);
@@ -59,9 +59,10 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
           },
           y: 150, x: 50, opacity: 0, scale: 0.7, ease: "none",
         });
-      } else {
+      } else if (variant === 'scroll') {
         gsap.set(containerRef.current, { opacity: 0, x: -300, y: 200, scale: 0.3, rotation: 30 });
 
+        // Show when scrolling past hero
         ScrollTrigger.create({
           trigger: "#content-section",
           start: "top top",
@@ -72,6 +73,39 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
               gsap.to(containerRef.current, { opacity: 0, x: -300, y: 200, scale: 0.3, rotation: 30, duration: 0.8, ease: "power3.out", overwrite: "auto" });
             }
           },
+        });
+
+        // Hide (dash into the about section) when reaching about
+        ScrollTrigger.create({
+          trigger: "#about",
+          start: "top 50%", // Triggers right when the box is nicely centered
+          onEnter: () => {
+            // Dash directly at the About box (up and right) and shrink to 0
+            gsap.to(containerRef.current, {
+              x: typeof window !== 'undefined' ? window.innerWidth * 0.6 : 800,
+              y: typeof window !== 'undefined' ? -window.innerHeight * 0.25 : -250,
+              scale: 0,
+              opacity: 0,
+              rotation: 15,
+              duration: 0.4,
+              ease: "power2.in",
+              overwrite: "auto"
+            });
+          },
+          onLeaveBack: () => {
+            // Burst back out of the About box and return to bottom-left
+            gsap.to(containerRef.current, {
+              x: 0,
+              y: 0,
+              scale: 1,
+              opacity: 1,
+              rotation: 0,
+              duration: 0.5,
+              delay: 0.2, // Wait for About sprite to start shrinking
+              ease: "back.out(1.2)",
+              overwrite: "auto"
+            });
+          }
         });
       }
 
@@ -112,7 +146,7 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
       if (variant === 'hero') {
         gsap.set(rightArmRef.current, { transformOrigin: "47% 59%" }); // Exact right shoulder joint
 
-        const waveTl = gsap.timeline({ delay: 1.8 }); 
+        const waveTl = gsap.timeline({ delay: 0.85 }); // Reduced delay to trigger faster after load
         waveTl.to(rightArmRef.current, { rotation: -70, duration: 0.4, ease: "power2.out" }) // Lift arm moderately high
               .to(rightArmRef.current, { rotation: -45, duration: 0.15, yoyo: true, repeat: 5, ease: "sine.inOut" }) // Wave back and forth
               .to(rightArmRef.current, { rotation: 0, duration: 0.5, ease: "power2.inOut" }); // Put arm back down
@@ -126,7 +160,7 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
         ease: "sine.inOut",
         yoyo: true,
         repeat: -1,
-        delay: variant === 'hero' ? 3.8 : 0.2,
+        delay: variant === 'hero' ? 3.1 : 0.2, // Reduced delay to match the faster wave
       });
 
       // Blinking Eyes (using exact eye center pivots)
@@ -180,11 +214,15 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
 
   const positionClass = variant === 'hero'
     ? "absolute bottom-0 right-10 md:right-32 z-10"
-    : "fixed bottom-0 left-1 md:left-5 z-50";
+    : variant === 'scroll'
+      ? "fixed bottom-0 left-1 md:left-5 z-50"
+      : "relative w-full h-full flex items-center justify-center";
 
   const sizeClass = variant === 'hero'
     ? "w-[45vw] sm:w-[35vw] md:w-[25vw] max-w-[500px]"
-    : "w-[20vw] sm:w-[15vw] md:w-[10vw] max-w-[150px]";
+    : variant === 'scroll'
+      ? "w-[20vw] sm:w-[15vw] md:w-[10vw] max-w-[150px]"
+      : "w-[80%] max-w-[300px]";
 
   const initialStyle = variant === 'scroll' ? { opacity: 0 } : undefined;
   const introStyle = variant === 'hero' ? { opacity: 0 } : undefined;

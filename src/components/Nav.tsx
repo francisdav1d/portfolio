@@ -15,16 +15,19 @@ export function Nav() {
         >
           Work
         </Link>
-        <a
-          href="#testimonials"
+        <Link
+          href="/#testimonials"
           className="hover:text-black transition-colors duration-300 cursor-pointer"
           onClick={(e) => {
-            e.preventDefault();
-            document.querySelector('#testimonials')?.scrollIntoView({ behavior: 'smooth' });
+            // Only intercept and smooth-scroll if we are already on the homepage
+            if (pathname === '/') {
+              e.preventDefault();
+              document.querySelector('#testimonials')?.scrollIntoView({ behavior: 'smooth' });
+            }
           }}
         >
           Testimonials
-        </a>
+        </Link>
         <Link
           href="/contact"
           className={`transition-colors duration-300 ${pathname === '/contact' ? 'text-black' : 'hover:text-black'}`}

@@ -17,19 +17,19 @@ const testimonials = [
     name: "FootballExplained",
     subs: "6.49K subscribers",
     text: "“Good communication, very clear and good editing. Knows exactly what's been asked. Great person to ❤️”",
-    avatar: "https://ui-avatars.com/api/?name=Football&background=fff&color=000&size=100&rounded=true&font-size=0.6",
+    avatar: "/images/youtube_profiles/football_explained.jpg",
   },
   {
     name: "Jose's Tech",
     subs: "1.68K subscribers",
     text: "“Francis is punctual, open to make revisions, and has a lot of skills in editing. The only issue I've found with him was that communication is sometimes hard because his English needs work. Other than that, once he understands he does an amazing job in editing. Overall, a great and talented editor.”",
-    avatar: "https://ui-avatars.com/api/?name=JT&background=333&color=fff&size=100&rounded=true",
+    avatar: "/images/youtube_profiles/jose_tech.jpg",
   },
   {
     name: "MagicHustler",
     subs: "47 subscribers",
     text: "“Francis totally killed it with the video editing - way better than I expected! Seriously recommend hiring him if you need video work done. He's legit good at what he does.”",
-    avatar: "https://ui-avatars.com/api/?name=MH&background=ffd700&color=000&size=100&rounded=true",
+    avatar: "/images/youtube_profiles/magic_hustler.jpg",
   }
 ];
 

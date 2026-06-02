@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { Nav } from '@/components/Nav';
 import { Footer } from '@/components/Footer';
@@ -10,6 +10,35 @@ export default function Contact() {
   const socialsRef = useRef<HTMLDivElement>(null);
   const formRef = useRef<HTMLDivElement>(null);
   const spriteRef = useRef<HTMLImageElement>(null);
+
+  const [status, setStatus] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setStatus('submitting');
+    
+    const form = e.currentTarget;
+    const data = new FormData(form);
+    
+    try {
+      const response = await fetch('https://formspree.io/f/YOUR_FORMSPREE_ID', {
+        method: 'POST',
+        body: data,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        setStatus('success');
+        form.reset();
+      } else {
+        setStatus('error');
+      }
+    } catch (error) {
+      setStatus('error');
+    }
+  };
 
   useEffect(() => {
     if (!formRef.current || !spriteRef.current || !socialsRef.current) return;
@@ -115,14 +144,16 @@ export default function Contact() {
               Start a project, schedule a talk or just say hello!
             </p>
             
-            <form style={{ opacity: 0 }} className="max-w-md lg:max-w-xl space-y-5 md:space-y-6">
+            <form style={{ opacity: 0 }} onSubmit={handleSubmit} className="max-w-md lg:max-w-xl space-y-5 md:space-y-6">
               <div>
                 <label className="block text-sm font-bold mb-2">Name *</label>
                 <input 
                   type="text" 
+                  name="name"
                   placeholder="Your Name..." 
                   className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
+                  disabled={status === 'submitting' || status === 'success'}
                 />
               </div>
               
@@ -130,30 +161,40 @@ export default function Contact() {
                 <label className="block text-sm font-bold mb-2">Email Address *</label>
                 <input 
                   type="email" 
+                  name="email"
                   placeholder="Your Email Address..." 
                   className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
+                  disabled={status === 'submitting' || status === 'success'}
                 />
               </div>
               
               <div>
                 <label className="block text-sm font-bold mb-2">Message *</label>
                 <textarea 
+                  name="message"
                   placeholder="Your Message..." 
                   rows={5}
                   className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
+                  disabled={status === 'submitting' || status === 'success'}
                 ></textarea>
               </div>
               
-
+              {status === 'error' && (
+                <p className="text-red-500 text-sm font-bold">Oops! There was a problem submitting your form.</p>
+              )}
+              {status === 'success' && (
+                <p className="text-[#0000ff] text-sm font-bold">Thanks for reaching out! I'll get back to you soon.</p>
+              )}
               
               <div>
                 <button 
-                  type="button" 
-                  className="bg-black text-white px-10 py-3.5 font-bold text-sm hover:bg-neutral-800 transition-colors shadow-lg active:scale-95 duration-200"
+                  type="submit" 
+                  disabled={status === 'submitting' || status === 'success'}
+                  className="bg-black text-white px-10 py-3.5 font-bold text-sm hover:bg-neutral-800 transition-colors shadow-lg active:scale-95 duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
-                  Submit
+                  {status === 'submitting' ? 'Sending...' : status === 'success' ? 'Sent!' : 'Submit'}
                 </button>
               </div>
             </form>
@@ -166,8 +207,8 @@ export default function Contact() {
             
             <img
               ref={spriteRef}
-              src="/images/francis_sprite_background_removed.png"
-              alt="Francis Sprite"
+              src="/images/calling.png"
+              alt="Francis Calling"
               className="w-[60vw] md:w-[22vw] lg:w-[25vw] xl:w-[28vw] max-w-[560px] object-contain origin-bottom"
               style={{
                 filter: 'drop-shadow(0 25px 50px rgba(0, 0, 255, 0.12)) drop-shadow(0 10px 20px rgba(0, 0, 0, 0.15))',
