@@ -215,7 +215,7 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'ab
   const positionClass = variant === 'hero'
     ? "absolute bottom-0 right-10 md:right-32 z-10"
     : variant === 'scroll'
-      ? "fixed bottom-0 left-1 md:left-5 z-50"
+      ? "fixed bottom-0 left-1 md:left-5 z-50 !hidden"
       : "relative w-full h-full flex items-center justify-center";
 
   const sizeClass = variant === 'hero'
