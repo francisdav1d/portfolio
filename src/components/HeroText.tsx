@@ -29,12 +29,11 @@ export function HeroText() {
         }
       );
 
-      // 2. Scroll Trigger for smooth fade out & parallax on scroll down, with reverse on scroll up
       gsap.to(containerRef.current, {
         scrollTrigger: {
           trigger: '#content-section',
-          start: 'top 55%',
-          end: 'top 15%',
+          start: 'top 45%',
+          end: 'top 5%',
           scrub: true,
         },
         y: -100,
@@ -55,13 +54,13 @@ export function HeroText() {
       {/* Modern Bold Lowercase Title */}
       <h1 
         ref={titleRef}
-        className="font-syne text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-extrabold text-white tracking-tighter lowercase leading-none max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl"
+        className="font-yd text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl font-extrabold text-white tracking-wider leading-none max-w-xs sm:max-w-lg md:max-w-xl lg:max-w-2xl xl:max-w-3xl 2xl:max-w-4xl"
         style={{
           textShadow: '0 4px 24px rgba(0, 0, 0, 0.45), 0 2px 6px rgba(0, 0, 0, 0.25)',
           opacity: 0,
         }}
       >
-        hey, i am francis
+        Hey, I'm Francis
       </h1>
     </div>
   );

@@ -16,10 +16,10 @@ export function Nav() {
           Work
         </Link>
         <Link
-          href="/#showreel"
-          className="hover:text-black transition-colors duration-300 flex items-center gap-2"
+          href="/work#testimonials"
+          className="hover:text-black transition-colors duration-300"
         >
-          Showreel <span className="text-gray-400">✦</span> 2025
+          Testimonials
         </Link>
         <Link
           href="/contact"

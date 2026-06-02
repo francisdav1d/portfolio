@@ -178,7 +178,7 @@ export default function Contact() {
         </div>
       </main>
 
-      <Footer />
+      <Footer hideSocials />
     </div>
   );
 }

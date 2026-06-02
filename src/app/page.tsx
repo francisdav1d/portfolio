@@ -21,38 +21,32 @@ export default function Home() {
 
   const projects = [
     {
-      title: "SPCTR",
-      subtitle: "Personal Project",
+      title: "JEOPARDY",
       youtubeId: "GHsqx0q20XU",
       image: "https://img.youtube.com/vi/GHsqx0q20XU/maxresdefault.jpg"
     },
     {
-      title: "Action",
-      subtitle: "Commercial",
+      title: "ARCADE",
       youtubeId: "Aa5tlmIv0z8",
       image: "https://img.youtube.com/vi/Aa5tlmIv0z8/maxresdefault.jpg"
     },
     {
-      title: "Product",
-      subtitle: "Tech Launch",
+      title: "MINI GOLF",
       youtubeId: "Ks4ikO8ByAY",
       image: "https://img.youtube.com/vi/Ks4ikO8ByAY/maxresdefault.jpg"
     },
     {
-      title: "Automotive",
-      subtitle: "Brand Film",
+      title: "LARGEST PIZZA",
       youtubeId: "bFr3E5lxUB0",
       image: "https://img.youtube.com/vi/bFr3E5lxUB0/maxresdefault.jpg"
     },
     {
-      title: "Creative",
-      subtitle: "Studio Reel",
+      title: "SECRET SANTA",
       youtubeId: "MeW831xdOEI",
       image: "https://img.youtube.com/vi/MeW831xdOEI/maxresdefault.jpg"
     },
     {
-      title: "Event",
-      subtitle: "Conference 2024",
+      title: "MUCKBANG",
       youtubeId: "OmKc0FYU64E",
       image: "https://img.youtube.com/vi/OmKc0FYU64E/maxresdefault.jpg"
     },

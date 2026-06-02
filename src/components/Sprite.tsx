@@ -41,8 +41,8 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' }) {
         gsap.to(containerRef.current, {
           scrollTrigger: {
             trigger: "#content-section",
-            start: "top 55%",
-            end: "top 15%",
+            start: "top 45%",
+            end: "top 5%",
             scrub: true,
           },
           y: 150,

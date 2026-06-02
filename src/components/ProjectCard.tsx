@@ -9,7 +9,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 interface Project {
   title: string;
-  subtitle: string;
   youtubeId?: string;
   image: string;
 }
@@ -56,14 +55,18 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
           <img
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
 
-          <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-0 group-hover:opacity-80 transition-opacity duration-300"></div>
+          <div className="absolute inset-0 bg-[#0000ff] mix-blend-multiply opacity-0 group-hover:opacity-70 transition-opacity duration-500 ease-out"></div>
           
-          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-4 md:p-6 lg:p-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-white">
-            <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium mb-1">{project.title} ✦</h3>
-            <p className="text-base md:text-lg lg:text-xl xl:text-2xl opacity-90">{project.subtitle}</p>
+          <div className="absolute inset-0 z-20 flex flex-col items-start justify-start p-4 md:p-6 lg:p-8 opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out translate-y-3 group-hover:translate-y-0 text-white pointer-events-none">
+            <h3 className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-medium">{project.title}</h3>
+          </div>
+          <div className="absolute inset-0 z-20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-500 ease-out scale-95 group-hover:scale-100 text-white pointer-events-none">
+            <svg className="w-10 h-10 md:w-14 md:h-14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5.14v14l11-7-11-7z" />
+            </svg>
           </div>
         </>
       )}
