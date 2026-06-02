@@ -8,6 +8,9 @@ import { ProjectCard } from '@/components/ProjectCard';
 import { Sprite } from '@/components/Sprite';
 import { HeroText } from '@/components/HeroText';
 
+import { About } from '@/components/About';
+import { Testimonials } from '@/components/Testimonials';
+
 export default function Home() {
   const videoContainerRef = useRef<HTMLDivElement>(null);
 
@@ -97,6 +100,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+
+        <Testimonials />
+        <About />
 
         <Footer />
       </div>

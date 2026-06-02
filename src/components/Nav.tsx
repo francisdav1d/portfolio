@@ -15,12 +15,16 @@ export function Nav() {
         >
           Work
         </Link>
-        <Link
-          href="/work#testimonials"
-          className="hover:text-black transition-colors duration-300"
+        <a
+          href="#testimonials"
+          className="hover:text-black transition-colors duration-300 cursor-pointer"
+          onClick={(e) => {
+            e.preventDefault();
+            document.querySelector('#testimonials')?.scrollIntoView({ behavior: 'smooth' });
+          }}
         >
           Testimonials
-        </Link>
+        </a>
         <Link
           href="/contact"
           className={`transition-colors duration-300 ${pathname === '/contact' ? 'text-black' : 'hover:text-black'}`}
