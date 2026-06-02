@@ -5,6 +5,7 @@ import { Metadata } from 'next';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
+import { Analytics } from '@vercel/analytics/react';
 
 const ydFont = localFont({
   src: '../../public/fonts/YDYoonche.woff2',
@@ -48,6 +49,7 @@ export default function RootLayout({
         <SmoothScrollProvider>
           {children}
         </SmoothScrollProvider>
+        <Analytics />
       </body>
     </html>
   );
