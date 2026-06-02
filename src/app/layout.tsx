@@ -21,9 +21,23 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Francis David | Video Editor & Creative',
     description: 'Official portfolio of Francis David, a professional video editor specializing in cinematic music videos, commercials, and brand films.',
-    url: 'https://francisdavid.me', 
+    url: 'https://francisdavid.me',
     siteName: 'Francis David Portfolio',
     type: 'website',
+    images: [
+      {
+        url: 'https://francisdavid.me/images/website_working.png',
+        width: 1200,
+        height: 630,
+        alt: 'Francis David Portfolio Preview',
+      }
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Francis David | Video Editor & Creative',
+    description: 'Official portfolio of Francis David, a professional video editor specializing in cinematic music videos, commercials, and brand films.',
+    images: ['https://francisdavid.me/images/website_working.png'],
   },
   robots: {
     index: true,
