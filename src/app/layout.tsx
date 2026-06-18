@@ -13,14 +13,14 @@ const ydFont = localFont({
 });
 
 export const metadata: Metadata = {
-  title: 'Francis David | Video Editor & Creative',
-  description: 'Official portfolio of Francis David, a professional video editor specializing in cinematic music videos, commercials, and brand films.',
+  title: 'Editor francisdavid',
+  description: 'Francis David - Video Editor specializing in long form YouTube videos.',
   keywords: ['Francis David', 'FrancisDavid', 'Video Editor', 'Portfolio', 'Cinematic', 'Creative Director', 'Filmmaker'],
   authors: [{ name: 'Francis David' }],
   creator: 'Francis David',
   openGraph: {
-    title: 'Francis David | Video Editor & Creative',
-    description: 'Official portfolio of Francis David, a professional video editor specializing in cinematic music videos, commercials, and brand films.',
+    title: 'Editor francisdavid',
+    description: 'Francis David - Video Editor specializing in long form YouTube videos.',
     url: 'https://francisdavid.me',
     siteName: 'Francis David Portfolio',
     type: 'website',
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Francis David | Video Editor & Creative',
-    description: 'Official portfolio of Francis David, a professional video editor specializing in cinematic music videos, commercials, and brand films.',
+    title: 'Editor francisdavid',
+    description: 'Francis David - Video Editor specializing in long form YouTube videos.',
     images: ['https://francisdavid.me/images/website_working.png'],
   },
   robots: {
