@@ -13,6 +13,7 @@ const ydFont = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://francisdavid.me'),
   title: 'Editor francisdavid',
   description: 'Francis David - Video Editor specializing in long form YouTube videos.',
   keywords: ['Francis David', 'FrancisDavid', 'Video Editor', 'Portfolio', 'Cinematic', 'Creative Director', 'Filmmaker'],
