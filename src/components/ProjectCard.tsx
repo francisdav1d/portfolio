@@ -29,7 +29,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
         scrollTrigger: {
           trigger: cardRef.current,
           start: "top bottom-=50",
-          toggleActions: "play reverse play reverse"
+          toggleActions: "play none none none"
         }
       }
     );
@@ -55,6 +55,7 @@ export function ProjectCard({ project, index = 0 }: { project: Project, index?: 
           <img
             src={project.image}
             alt={project.title}
+            loading="eager"
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
 
