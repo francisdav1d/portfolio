@@ -26,32 +26,32 @@ export default function Home() {
     {
       title: "JEOPARDY",
       youtubeId: "GHsqx0q20XU",
-      image: "https://img.youtube.com/vi/GHsqx0q20XU/maxresdefault.jpg"
+      image: "/images/thumbnails/jeopardy.jpg"
     },
     {
       title: "ARCADE",
       youtubeId: "Aa5tlmIv0z8",
-      image: "https://img.youtube.com/vi/Aa5tlmIv0z8/maxresdefault.jpg"
+      image: "/images/thumbnails/arcade.jpg"
     },
     {
       title: "MINI GOLF",
       youtubeId: "Ks4ikO8ByAY",
-      image: "https://img.youtube.com/vi/Ks4ikO8ByAY/maxresdefault.jpg"
+      image: "/images/thumbnails/mini_golf.jpg"
     },
     {
       title: "LARGEST PIZZA",
       youtubeId: "bFr3E5lxUB0",
-      image: "https://img.youtube.com/vi/bFr3E5lxUB0/maxresdefault.jpg"
+      image: "/images/thumbnails/largest_pizza.jpg"
     },
     {
       title: "SECRET SANTA",
       youtubeId: "MeW831xdOEI",
-      image: "https://img.youtube.com/vi/MeW831xdOEI/maxresdefault.jpg"
+      image: "/images/thumbnails/secret_santa.jpg"
     },
     {
       title: "MUCKBANG",
       youtubeId: "OmKc0FYU64E",
-      image: "https://img.youtube.com/vi/OmKc0FYU64E/maxresdefault.jpg"
+      image: "/images/thumbnails/muckbang.jpg"
     },
   ];
 
