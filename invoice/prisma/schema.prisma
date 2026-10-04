@@ -1,0 +1,207 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  OWNER
+  FREELANCER
+}
+
+// OUTGOING: you bill an external client by email.
+// INTERNAL: a platform user (usually a freelancer) bills another platform user (usually you).
+enum InvoiceKind {
+  OUTGOING
+  INTERNAL
+}
+
+enum InvoiceStatus {
+  DRAFT
+  SENT // OUTGOING: emailed to client
+  VIEWED // OUTGOING: client opened the hosted link
+  SUBMITTED // INTERNAL: waiting for recipient approval
+  APPROVED // INTERNAL: recipient accepted, awaiting payment
+  REJECTED // INTERNAL: recipient sent it back
+  PARTIAL
+  PAID
+  VOID
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  WISE
+  PAYPAL
+  OTHER
+}
+
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         Role     @default(FREELANCER)
+  active       Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  // Business profile shown on invoices
+  businessName String?
+  address      String?
+  phone        String?
+  taxId        String?
+
+  // Payment instructions shown on invoices
+  bankName          String?
+  bankAccountName   String?
+  bankAccountNumber String?
+  bankRouting       String?
+  bankSwift         String?
+  bankAddress       String?
+  wiseEmail         String?
+  paypalEmail       String?
+  paymentNotes      String?
+
+  // Invoice defaults
+  defaultCurrency   String  @default("USD")
+  invoicePrefix     String  @default("INV")
+  nextInvoiceNumber Int     @default(1)
+  defaultTerms      String?
+  defaultDueDays    Int     @default(14)
+
+  clients          Client[]
+  invoicesIssued   Invoice[]       @relation("issuer")
+  invoicesReceived Invoice[]       @relation("recipient")
+  paymentsRecorded Payment[]
+  activities       Activity[]
+  resetTokens      PasswordReset[]
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  tokenHash String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  usedAt    DateTime?
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  ownerId   String
+  owner     User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  name      String
+  company   String?
+  email     String
+  ccEmails  String? // comma separated
+  phone     String?
+  address   String?
+  taxId     String?
+  currency  String   @default("USD")
+  notes     String?
+  archived  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  invoices Invoice[]
+
+  @@index([ownerId])
+}
+
+model Invoice {
+  id     String        @id @default(cuid())
+  kind   InvoiceKind
+  status InvoiceStatus @default(DRAFT)
+  number String
+
+  issuerId    String
+  issuer      User    @relation("issuer", fields: [issuerId], references: [id])
+  clientId    String?
+  client      Client? @relation(fields: [clientId], references: [id])
+  recipientId String?
+  recipient   User?   @relation("recipient", fields: [recipientId], references: [id])
+
+  issueDate DateTime
+  dueDate   DateTime
+  currency  String   @default("USD")
+
+  // Money is stored in cents to avoid floating point drift.
+  subtotalCents Int @default(0)
+  discountType  String @default("PERCENT") // PERCENT | AMOUNT
+  discountValue Float  @default(0) // percent, or cents when AMOUNT
+  discountCents Int @default(0)
+  taxRate       Float  @default(0) // percent
+  taxCents      Int @default(0)
+  totalCents    Int @default(0)
+  paidCents     Int @default(0)
+
+  notes String?
+  terms String?
+
+  publicToken     String    @unique @default(cuid())
+  sentAt          DateTime?
+  viewedAt        DateTime?
+  viewCount       Int       @default(0)
+  submittedAt     DateTime?
+  approvedAt      DateTime?
+  rejectedAt      DateTime?
+  rejectionReason String?
+  paidAt          DateTime?
+  voidedAt        DateTime?
+  remindersOn     Boolean   @default(true)
+  lastReminderAt  DateTime?
+  reminderCount   Int       @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items      InvoiceItem[]
+  payments   Payment[]
+  activities Activity[]
+
+  @@unique([issuerId, number])
+  @@index([recipientId, status])
+  @@index([issuerId, status])
+}
+
+model InvoiceItem {
+  id             String  @id @default(cuid())
+  invoiceId      String
+  invoice        Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  position       Int
+  description    String
+  quantity       Float
+  unitPriceCents Int
+  amountCents    Int
+}
+
+model Payment {
+  id           String        @id @default(cuid())
+  invoiceId    String
+  invoice      Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  amountCents  Int
+  method       PaymentMethod
+  reference    String? // wire reference, Wise transfer ID, PayPal txn ID
+  paidAt       DateTime
+  note         String?
+  recordedById String
+  recordedBy   User          @relation(fields: [recordedById], references: [id])
+  createdAt    DateTime      @default(now())
+
+  @@index([invoiceId])
+}
+
+model Activity {
+  id        String   @id @default(cuid())
+  invoiceId String
+  invoice   Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  actorId   String?
+  actor     User?    @relation(fields: [actorId], references: [id])
+  type      String
+  message   String
+  createdAt DateTime @default(now())
+
+  @@index([invoiceId])
+}
