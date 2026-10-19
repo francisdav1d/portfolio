@@ -1,7 +1,7 @@
 import '../styles/tailwind.css';
 import '../styles/theme.css';
 import '../styles/fonts.css';
-import { Metadata } from 'next';
+import { Metadata, Viewport } from 'next';
 import clsx from 'clsx';
 import localFont from 'next/font/local';
 import { SmoothScrollProvider } from '@/components/providers/SmoothScrollProvider';
@@ -12,7 +12,14 @@ const ydFont = localFont({
   variable: '--font-yd',
 });
 
+// The site is designed light-only: stop browsers' forced dark modes from repainting it
+// ('only light' opts out of Chrome's auto dark mode; darkreader-lock opts out of Dark Reader)
+export const viewport: Viewport = {
+  colorScheme: 'only light',
+};
+
 export const metadata: Metadata = {
+  other: { 'darkreader-lock': 'true' },
   metadataBase: new URL('https://francisdavid.me'),
   title: 'Editor francisdavid',
   description: 'Francis David - Video Editor specializing in long form YouTube videos.',

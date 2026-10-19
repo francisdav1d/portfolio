@@ -151,7 +151,7 @@ export default function Contact() {
                   type="text" 
                   name="name"
                   placeholder="Your Name..." 
-                  className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
+                  className="w-full border border-[#0000ff] p-3 text-base md:text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
                   disabled={status === 'submitting' || status === 'success'}
                 />
@@ -163,7 +163,7 @@ export default function Contact() {
                   type="email" 
                   name="email"
                   placeholder="Your Email Address..." 
-                  className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
+                  className="w-full border border-[#0000ff] p-3 text-base md:text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
                   disabled={status === 'submitting' || status === 'success'}
                 />
@@ -175,7 +175,7 @@ export default function Contact() {
                   name="message"
                   placeholder="Your Message..." 
                   rows={5}
-                  className="w-full border border-[#0000ff] p-3 text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
+                  className="w-full border border-[#0000ff] p-3 text-base md:text-sm focus:outline-none focus:ring-1 focus:ring-[#0000ff] transition-all bg-transparent"
                   required
                   disabled={status === 'submitting' || status === 'success'}
                 ></textarea>

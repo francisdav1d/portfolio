@@ -22,7 +22,7 @@ const testimonials = [
   {
     name: "Jose's Tech",
     subs: "1.68K subscribers",
-    text: "“Francis is punctual, open to make revisions, and has a lot of skills in editing. The only issue I've found with him was that communication is sometimes hard because his English needs work. Other than that, once he understands he does an amazing job in editing. Overall, a great and talented editor.”",
+    text: "“Francis is punctual, open to make revisions, and has a lot of skills in editing.He does an amazing job in editing. Overall, a great and talented editor.”",
     avatar: "/images/youtube_profiles/jose_tech.jpg",
   },
   {
@@ -58,10 +58,10 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section id="testimonials" className="py-16 md:py-20 lg:py-24 bg-white text-black w-full border-t border-neutral-100 flex flex-col justify-center relative">
+    <section id="testimonials" className="py-[clamp(3rem,calc(10vw_-_96px),6rem)] bg-white text-black w-full flex flex-col justify-center relative">
       <div className="w-[90%] md:w-[95%] lg:w-[90%] max-w-[1600px] mx-auto" ref={containerRef}>
 
-        <div className="text-center mb-16 md:mb-24">
+        <div className="text-center mb-[clamp(2.5rem,calc(10vw_-_96px),6rem)]">
           <h2 className="text-sm font-bold tracking-[0.2em] text-[#0000ff] uppercase mb-4">
             Testimonials
           </h2>

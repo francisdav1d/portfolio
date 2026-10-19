@@ -53,7 +53,7 @@ export function About() {
   }, []);
 
   return (
-    <section id="about" className="py-20 md:py-32 bg-white w-full overflow-hidden">
+    <section id="about" className="pt-[clamp(4rem,calc(18vw_-_170px),11rem)] pb-[clamp(3.5rem,calc(13vw_-_122px),8rem)] bg-white w-full overflow-hidden">
       <div className="w-[90%] md:w-[85%] lg:w-[80%] max-w-[1600px] mx-auto" ref={containerRef}>
         <div className="flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
           
@@ -62,7 +62,7 @@ export function About() {
               About Me
             </h2>
             <h3 className="font-yd text-4xl md:text-5xl lg:text-7xl leading-[1.1] mb-8 text-black">
-              Crafting stories <br /> through motion.
+              Crafting stories <br /> through motion!
             </h3>
             <p className="text-neutral-600 text-base md:text-lg lg:text-xl font-light leading-relaxed mb-6">
               Hey, I'm Francis. I have been editing for 4 years. I started learning editing for my own YouTube channel. I loved the process so I continued.

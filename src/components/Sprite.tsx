@@ -1,12 +1,14 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
+import { preload } from 'react-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'about' }) {
+  const [ready, setReady] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const introRef = useRef<HTMLDivElement>(null);
   const spriteGroupRef = useRef<HTMLDivElement>(null);
@@ -21,7 +23,20 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'ab
   const rightArmRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !introRef.current || !spriteGroupRef.current) return;
+    let cancelled = false;
+    const images = Array.from(spriteGroupRef.current?.querySelectorAll('img') ?? []);
+
+    // Preloading starts requests early; decoding is what guarantees every layer can paint.
+    // Keep the entire mascot hidden until all layers are ready, including on a cold cache.
+    Promise.all(images.map((image) => image.decode()))
+      .then(() => { if (!cancelled && images.length > 0) setReady(true); })
+      .catch(() => { /* A missing layer must never reveal a dismembered mascot. */ });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  useEffect(() => {
+    if (!ready || !containerRef.current || !introRef.current || !spriteGroupRef.current) return;
 
     const ctx = gsap.context(() => {
       // 1. INTRO & SCROLL LOGIC
@@ -50,12 +65,15 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'ab
           "-=0.4" // Start right as it hits the brakes
         );
 
+        // Same scroll range as HeroText: 90% to 10% of the header's height
+        const headerHeight = () => containerRef.current?.parentElement?.offsetHeight ?? window.innerHeight / 2;
         gsap.to(containerRef.current, {
           scrollTrigger: {
             trigger: "#content-section",
-            start: "top 45%",
-            end: "top 5%",
+            start: () => `top ${headerHeight() * 0.9}px`,
+            end: () => `top ${headerHeight() * 0.1}px`,
             scrub: true,
+            invalidateOnRefresh: true,
           },
           y: 150, x: 50, opacity: 0, scale: 0.7, ease: "none",
         });
@@ -112,8 +130,10 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'ab
       // 2. LAYER ANIMATIONS
       // 2. LAYER ANIMATIONS
       // Floating (entire group)
+      // The hero float scales with the sprite (25px at desktop size) so a small phone sprite
+      // doesn't bob up into the text
       gsap.to(spriteGroupRef.current, {
-        y: variant === 'hero' ? "-=25" : "-=15",
+        y: variant === 'hero' ? `-=${Math.round((spriteGroupRef.current?.offsetHeight ?? 385) * 0.065)}` : "-=15",
         duration: 2.5,
         ease: "sine.inOut",
         yoyo: true,
@@ -210,31 +230,51 @@ export function Sprite({ variant = 'hero' }: { variant?: 'hero' | 'scroll' | 'ab
     });
 
     return () => ctx.revert();
-  }, [variant]);
+  }, [variant, ready]);
 
+  // Hero sizing goes through --sprite-w. The three screen ranges never overlap, so the result
+  // can't depend on the order the rules land in the stylesheet.
   const positionClass = variant === 'hero'
-    ? "absolute bottom-0 right-10 md:right-32 z-10"
+    ? [
+        "absolute bottom-0 z-10",
+        // Phones: capped by the header height (--hero-h) so it fits under the centred text, and pushed right so
+        // the drawing itself (the layer images' right ~25% is empty canvas) sits 1rem from the edge
+        "max-md:[--sprite-w:min(40vw,calc(var(--hero-h,50vh)*0.5_-_30px))] max-md:right-[calc(1rem_-_0.25*var(--sprite-w))]",
+        // Normal md+ screens: the original size and spacing
+        "[@media(width>=48rem)_and_(height>500px)]:[--sprite-w:25vw] [@media(width>=48rem)_and_(height>500px)]:right-32",
+        // Short md+ screens (landscape phones): same treatment as phones
+        "[@media(width>=48rem)_and_(height<=500px)]:[--sprite-w:min(25vw,40vh)] [@media(width>=48rem)_and_(height<=500px)]:right-[calc(1rem_-_0.25*var(--sprite-w))]",
+      ].join(" ")
     : variant === 'scroll'
       ? "fixed bottom-0 left-1 md:left-5 z-50 !hidden"
       : "relative w-full h-full flex items-center justify-center";
 
   const sizeClass = variant === 'hero'
-    ? "w-[45vw] sm:w-[35vw] md:w-[25vw] max-w-[500px]"
+    ? "w-(--sprite-w) max-w-[500px]"
     : variant === 'scroll'
       ? "w-[20vw] sm:w-[15vw] md:w-[10vw] max-w-[150px]"
       : "w-[80%] max-w-[300px]";
 
-  const initialStyle = variant === 'scroll' ? { opacity: 0 } : undefined;
+  const initialStyle = {
+    visibility: ready ? 'visible' as const : 'hidden' as const,
+    ...(variant === 'scroll' ? { opacity: 0 } : {}),
+  };
   const introStyle = variant === 'hero' ? { opacity: 0 } : undefined;
 
   // The base path for our separated layers
   const basePath = "/images/logo_separate";
 
+  // Fetch every layer at high priority as soon as the page response arrives, so all the parts arrive together
+  // instead of queuing behind the video, JS and thumbnails. The decode barrier prevents partial paints.
+  ['body', 'face', 'mouth', 'left eye', 'right eye', 'left arm', 'right arm'].forEach((layer) =>
+    preload(`${basePath}/${layer}.png`, { as: 'image', fetchPriority: 'high' })
+  );
+
   return (
     <div ref={containerRef} className={`${positionClass} pointer-events-none`} style={initialStyle}>
       
       {/* Smoke clouds for the high-speed intro */}
-      {variant === 'hero' && (
+      {variant === 'hero' && ready && (
         <div className="absolute bottom-10 left-[-50px] z-0 pointer-events-none">
           <div className="smoke-puff absolute w-16 h-16 bg-white/60 rounded-full blur-md opacity-0 left-0" />
           <div className="smoke-puff absolute w-24 h-24 bg-white/60 rounded-full blur-md opacity-0 left-[-40px] bottom-[-20px]" />

@@ -7,6 +7,11 @@ import { ProjectCard } from '@/components/ProjectCard';
 export default function Work() {
   const projects = [
     {
+      title: "PWR HOUSE",
+      youtubeId: "t1hOURfsLu0",
+      image: "/images/thumbnails/pwr_house.jpg"
+    },
+    {
       title: "Project 1",
       subtitle: "Commercial",
       youtubeId: "GHsqx0q20XU",
@@ -59,7 +64,7 @@ export default function Work() {
           <div className="w-[85%] max-w-[2000px] mx-auto">
             <h1 className="text-5xl md:text-7xl font-medium mb-12 text-white text-center">All Work</h1>
             
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-0 bg-black">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               {projects.map((project, index) => (
                 <ProjectCard key={index} project={project} index={index} />
               ))}
